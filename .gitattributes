@@ -1,0 +1,2 @@
+mvtec/mvtec_model.pth filter=lfs diff=lfs merge=lfs -text
+mvtec_model.pth filter=lfs diff=lfs merge=lfs -text
