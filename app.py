@@ -30,6 +30,12 @@ transform = transforms.Compose([
 # Initialize FastAPI
 app = FastAPI()
 
+# Root endpoint to prevent 404 errors
+@app.get("/")
+def home():
+    return {"message": "Welcome to the FastAPI server!"}
+
+# Prediction endpoint
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
     try:
