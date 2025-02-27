@@ -4,13 +4,18 @@ from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 import io
 import torchvision.models as models
+import os
+
+# Get the current directory of the script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "mvtec_model.pth")
 
 # Initialize ResNet18 model with the correct number of output classes (2)
 model = models.resnet18(pretrained=False)
 model.fc = torch.nn.Linear(512, 2)  # Modify the fully connected layer
 
 # Load the saved model weights
-model.load_state_dict(torch.load("C:/work/Forest/Swedish/mvtec/mvtec_model.pth", map_location=torch.device("cpu")))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
 
 # Set model to evaluation mode
 model.eval()
@@ -24,7 +29,6 @@ transform = transforms.Compose([
 
 # Initialize FastAPI
 app = FastAPI()
-
 
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
