@@ -29,6 +29,18 @@ transform = transforms.Compose([
 
 # Initialize FastAPI
 app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# Enable CORS for all domains (you can replace "*" with your frontend domain)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or ["https://your-frontend-url.com"] for security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Root endpoint to prevent 404 errors
 @app.get("/")
